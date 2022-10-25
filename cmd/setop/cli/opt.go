@@ -1,6 +1,6 @@
 package cli
 
-import "github.com/marcosy/setop/internal/operator"
+import "github.com/marcosy/setop/internal/calculator"
 
 func WithPrinter(p printer) opt {
 	return func(c *cli) {
@@ -8,12 +8,12 @@ func WithPrinter(p printer) opt {
 	}
 }
 
-func WithUnionConstructor(constructor unionConstructor) opt {
+func WithCalcConstructor(constructor calculatorConstructor) opt {
 	return func(c *cli) {
-		c.newUnion = constructor
+		c.newCalculator = constructor
 	}
 }
 
 type opt func(*cli)
 type printer func(string, ...interface{}) (int, error)
-type unionConstructor func(string, string) (operator.I, error)
+type calculatorConstructor func(string, string) (calculator.I, error)

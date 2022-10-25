@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/marcosy/setop/cmd/setop/cli"
-	"github.com/marcosy/setop/internal/operator"
+	"github.com/marcosy/setop/internal/calculator"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -18,7 +18,6 @@ Example: setop union file1.txt file2.txt
 `
 
 func TestRun(t *testing.T) {
-
 	tests := []struct {
 		name          string
 		args          []string
@@ -61,14 +60,14 @@ func TestRun(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			r := new(recorder)
-			unionConstructor := newFakeUnionConstructor
+			calcConstructor := newFakeCalcConstructor
 			if test.failOperation {
-				unionConstructor = newFakeUnionConstructorFaulty
+				calcConstructor = newFakeCalcConstructorFaulty
 			}
 
 			c := cli.New(
 				cli.WithPrinter(r.printf),
-				cli.WithUnionConstructor(unionConstructor),
+				cli.WithCalcConstructor(calcConstructor),
 			)
 			actExitCode := c.Run(test.args)
 
@@ -87,16 +86,16 @@ func (r *recorder) printf(format string, a ...interface{}) (int, error) {
 	return 0, nil
 }
 
-func newFakeUnionConstructor(a, b string) (operator.I, error) {
-	return &fakeUnionOp{}, nil
+func newFakeCalcConstructor(a, b string) (calculator.I, error) {
+	return &fakeCalc{}, nil
 }
 
-func newFakeUnionConstructorFaulty(a, b string) (operator.I, error) {
+func newFakeCalcConstructorFaulty(a, b string) (calculator.I, error) {
 	return nil, fmt.Errorf("something went wrong")
 }
 
-type fakeUnionOp struct{}
+type fakeCalc struct{}
 
-func (*fakeUnionOp) Do() string {
+func (*fakeCalc) Union() string {
 	return "union was called"
 }

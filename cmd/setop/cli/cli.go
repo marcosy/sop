@@ -3,7 +3,7 @@ package cli
 import (
 	"fmt"
 
-	"github.com/marcosy/setop/internal/operator/union"
+	"github.com/marcosy/setop/internal/calculator"
 )
 
 const (
@@ -14,8 +14,8 @@ const (
 
 func New(opts ...opt) *cli {
 	defaultCLI := &cli{
-		printf:   fmt.Printf,
-		newUnion: union.New,
+		printf:        fmt.Printf,
+		newCalculator: calculator.New,
 	}
 
 	for _, opt := range opts {
@@ -26,8 +26,8 @@ func New(opts ...opt) *cli {
 }
 
 type cli struct {
-	printf   printer
-	newUnion unionConstructor
+	printf        printer
+	newCalculator calculatorConstructor
 }
 
 func (c *cli) Run(args []string) int {
@@ -39,13 +39,13 @@ func (c *cli) Run(args []string) int {
 	operation := args[0]
 	switch operation {
 	case opUnion:
-		u, err := c.newUnion(args[1], args[2])
+		calc, err := c.newCalculator(args[1], args[2])
 		if err != nil {
 			c.printf("Unable to compute union: %v", err)
 			return 3
 		}
 
-		c.printf(u.Do())
+		c.printf(calc.Union())
 		c.printf("\n")
 
 	case opIntersection:

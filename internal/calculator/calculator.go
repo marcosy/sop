@@ -1,15 +1,13 @@
-package union
+package calculator
 
 import (
 	"fmt"
 	"os"
 	"strings"
-
-	"github.com/marcosy/setop/internal/operator"
 )
 
-func New(filepath1, filepath2 string) (operator.I, error) {
-	u := &Union{
+func New(filepath1, filepath2 string) (I, error) {
+	t := &T{
 		separator: "\n",
 	}
 
@@ -23,21 +21,25 @@ func New(filepath1, filepath2 string) (operator.I, error) {
 		return nil, fmt.Errorf("unable to read second file: %w", err)
 	}
 
-	u.set1 = string(set1)
-	u.set2 = string(set2)
+	t.set1 = string(set1)
+	t.set2 = string(set2)
 
-	return u, nil
+	return t, nil
 }
 
-type Union struct {
+type I interface {
+	Union() string
+}
+
+type T struct {
 	set1      string
 	set2      string
 	separator string
 }
 
-func (u *Union) Do() string {
-	slice1 := strings.Split(u.set1, u.separator)
-	slice2 := strings.Split(u.set2, u.separator)
+func (t *T) Union() string {
+	slice1 := strings.Split(t.set1, t.separator)
+	slice2 := strings.Split(t.set2, t.separator)
 
 	resultMap := make(map[string]struct{})
 	for _, e := range slice1 {
@@ -51,23 +53,23 @@ func (u *Union) Do() string {
 	var resultSet string
 	for k := range resultMap {
 		if k != "" {
-			resultSet += k + u.separator
+			resultSet += k + t.separator
 		}
 	}
 
-	resultSet = strings.TrimSuffix(resultSet, u.separator)
+	resultSet = strings.TrimSuffix(resultSet, t.separator)
 
 	return resultSet
 }
 
-func (u *Union) GetSet1() string {
-	return u.set1
+func (t *T) GetSet1() string {
+	return t.set1
 }
 
-func (u *Union) GetSet2() string {
-	return u.set2
+func (t *T) GetSet2() string {
+	return t.set2
 }
 
-func (u *Union) GetSeparator() string {
-	return u.separator
+func (t *T) GetSeparator() string {
+	return t.separator
 }

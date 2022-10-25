@@ -1,4 +1,4 @@
-package union_test
+package calculator_test
 
 import (
 	"io/ioutil"
@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/marcosy/setop/internal/operator/union"
+	"github.com/marcosy/setop/internal/calculator"
 	"github.com/stretchr/testify/require"
 )
 
@@ -48,22 +48,22 @@ func TestNew(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			u, err := newUnion(t, test.filepath1, test.filepath2)
+			c, err := newCalculator(t, test.filepath1, test.filepath2)
 			if test.expError != "" {
 				require.EqualError(t, err, test.expError)
 				return
 			}
 
 			require.NoError(t, err, "unable to create new union")
-			require.Equal(t, test.expContent1, u.GetSet1())
-			require.Equal(t, test.expContent2, u.GetSet2())
-			require.Equal(t, test.expSeparator, u.GetSeparator())
+			require.Equal(t, test.expContent1, c.GetSet1())
+			require.Equal(t, test.expContent2, c.GetSet2())
+			require.Equal(t, test.expSeparator, c.GetSeparator())
 		})
 	}
 
 }
 
-func TestDo(t *testing.T) {
+func TestUnion(t *testing.T) {
 	tests := []struct {
 		name   string
 		set1   string
@@ -118,23 +118,23 @@ func TestDo(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			f1 := makeTempFile(t, test.set1)
 			f2 := makeTempFile(t, test.set2)
-			u, err := newUnion(t, f1.Name(), f2.Name())
+			c, err := newCalculator(t, f1.Name(), f2.Name())
 			require.NoError(t, err)
 
-			actResult := u.Do()
+			actResult := c.Union()
 
-			requireEqualSets(t, test.expSet, actResult, u.GetSeparator())
+			requireEqualSets(t, test.expSet, actResult, c.GetSeparator())
 		})
 	}
 }
 
-func newUnion(t *testing.T, fpath1, fpath2 string) (*union.Union, error) {
-	op, err := union.New(fpath1, fpath2)
+func newCalculator(t *testing.T, fpath1, fpath2 string) (*calculator.T, error) {
+	op, err := calculator.New(fpath1, fpath2)
 	if err != nil {
 		return nil, err
 	}
 
-	u, ok := op.(*union.Union)
+	u, ok := op.(*calculator.T)
 	require.True(t, ok, "unable to cast operator to union")
 	return u, err
 }
