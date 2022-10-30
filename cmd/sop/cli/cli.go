@@ -12,9 +12,11 @@ const (
 	opDifference   = "difference"
 )
 
-func New(opts ...opt) *cli {
-	defaultCLI := &cli{
-		printf:        fmt.Printf,
+func New(opts ...Opt) *Cli {
+	defaultCLI := &Cli{
+		printf: func(s string, i ...interface{}) {
+			_, _ = fmt.Printf(s, i...)
+		},
 		newCalculator: calculator.New,
 	}
 
@@ -25,12 +27,17 @@ func New(opts ...opt) *cli {
 	return defaultCLI
 }
 
-type cli struct {
+type Cli struct {
 	printf        printer
 	newCalculator calculatorConstructor
 }
 
-func (c *cli) Run(args []string) int {
+func (c *Cli) Run(args []string) int {
+	if len(args) == 0 {
+		c.showHelp()
+		return 0
+	}
+
 	if len(args) != 3 {
 		c.showHelp()
 		return 1
@@ -62,7 +69,7 @@ func (c *cli) Run(args []string) int {
 	return 0
 }
 
-func (c *cli) showHelp() {
+func (c *Cli) showHelp() {
 	c.printf("Usage:\n\tsetop <operation> <filepath 1> <filepath 2>\n\n")
 	c.printf("<operation> must be one of: union, intersection, difference\n\n")
 	c.printf("Example: setop union file1.txt file2.txt\n")

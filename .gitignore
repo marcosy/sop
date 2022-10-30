@@ -1,9 +1,8 @@
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
+# Directory for output binary files
+bin/*
+
+# Directory for tool related files
+.build/*
 
 # Test binary, built with `go test -c`
 *.test

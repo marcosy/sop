@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/marcosy/setop/cmd/setop/cli"
+	"github.com/marcosy/setop/cmd/sop/cli"
 )
 
 func main() {

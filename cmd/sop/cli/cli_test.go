@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/marcosy/setop/cmd/setop/cli"
+	"github.com/marcosy/setop/cmd/sop/cli"
 	"github.com/marcosy/setop/internal/calculator"
 	"github.com/stretchr/testify/assert"
 )
@@ -26,10 +26,10 @@ func TestRun(t *testing.T) {
 		expExitCode   int
 	}{
 		{
-			name:        "When ALL parameters are missing, shows help message and exit code equal to 1",
+			name:        "When ALL parameters are missing, shows help message and exit code equal to 0",
 			args:        []string{},
 			expMessage:  helpMessage,
-			expExitCode: 1,
+			expExitCode: 0,
 		},
 		{
 			name:        "When ONE parameter is missing, shows help message and exit code equal to 1",
@@ -81,9 +81,8 @@ type recorder struct {
 	message string
 }
 
-func (r *recorder) printf(format string, a ...interface{}) (int, error) {
+func (r *recorder) printf(format string, a ...interface{}) {
 	r.message += fmt.Sprintf(format, a...)
-	return 0, nil
 }
 
 func newFakeCalcConstructor(a, b string) (calculator.I, error) {

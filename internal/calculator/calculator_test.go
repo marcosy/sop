@@ -60,7 +60,6 @@ func TestNew(t *testing.T) {
 			require.Equal(t, test.expSeparator, c.GetSeparator())
 		})
 	}
-
 }
 
 func TestUnion(t *testing.T) {

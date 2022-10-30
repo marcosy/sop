@@ -1,0 +1,30 @@
+run:
+  # Timeout for analysis, e.g. 30s, 5m.
+  # Default: 1m
+  timeout: 3m
+
+linters:
+  # Enable specific linter
+  # https://golangci-lint.run/usage/linters/#enabled-by-default-linters
+  enable:
+    - bodyclose
+    - depguard
+    - durationcheck
+    - errorlint
+    - gocritic
+    - goimports
+    - gosec
+    - misspell
+    - nakedret
+    - nolintlint
+    - revive
+    - unconvert
+    - unparam
+    - whitespace
+
+# All available settings of specific linters.
+linters-settings:
+  revive:
+    # Sets the default failure confidence.
+    confidence: 0.0
+
