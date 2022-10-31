@@ -69,7 +69,7 @@ all: build lint unit-test component-test ## Builds sop binary, run unit tests an
 
 .PHONY: build
 build: go-check ## Builds sop binary
-	@$(go_path) go build -o ./bin/sop cmd/sop/main.go
+	@$(go_path) go build -o ./bin/sop ./main.go
 
 .PHONY: unit-test
 unit-test: go-check ## Runs unit tests

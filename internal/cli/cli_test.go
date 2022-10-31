@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/marcosy/sop/cmd/sop/cli"
 	"github.com/marcosy/sop/internal/calculator"
+	"github.com/marcosy/sop/internal/cli"
 	"github.com/stretchr/testify/assert"
 )
 
