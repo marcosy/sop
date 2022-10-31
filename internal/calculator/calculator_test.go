@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/marcosy/setop/internal/calculator"
+	"github.com/marcosy/sop/internal/calculator"
 	"github.com/stretchr/testify/require"
 )
 
@@ -269,7 +269,7 @@ func newCalculator(t *testing.T, fpath1, fpath2 string) (*calculator.T, error) {
 }
 
 func makeTempFile(t *testing.T, content string) *os.File {
-	f, err := ioutil.TempFile("", "setop-test-file")
+	f, err := ioutil.TempFile("", "sop-test-file")
 	require.NoError(t, err, "unable to create temp file")
 
 	_, err = f.WriteString(content)

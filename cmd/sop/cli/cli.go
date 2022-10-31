@@ -3,7 +3,7 @@ package cli
 import (
 	"fmt"
 
-	"github.com/marcosy/setop/internal/calculator"
+	"github.com/marcosy/sop/internal/calculator"
 )
 
 const (
@@ -67,7 +67,7 @@ func (c *Cli) Run(args []string) int {
 }
 
 func (c *Cli) showHelp() {
-	c.printf("Usage:\n\tsetop <operation> <filepath 1> <filepath 2>\n\n")
+	c.printf("Usage:\n\tsop <operation> <filepath 1> <filepath 2>\n\n")
 	c.printf("<operation> must be one of: union, intersection, difference\n\n")
-	c.printf("Example: setop union file1.txt file2.txt\n")
+	c.printf("Example: sop union file1.txt file2.txt\n")
 }

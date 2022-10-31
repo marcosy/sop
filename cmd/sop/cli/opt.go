@@ -1,6 +1,6 @@
 package cli
 
-import "github.com/marcosy/setop/internal/calculator"
+import "github.com/marcosy/sop/internal/calculator"
 
 func WithPrinter(p printer) Opt {
 	return func(c *Cli) {

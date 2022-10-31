@@ -4,17 +4,17 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/marcosy/setop/cmd/sop/cli"
-	"github.com/marcosy/setop/internal/calculator"
+	"github.com/marcosy/sop/cmd/sop/cli"
+	"github.com/marcosy/sop/internal/calculator"
 	"github.com/stretchr/testify/assert"
 )
 
 var helpMessage = `Usage:
-	setop <operation> <filepath 1> <filepath 2>
+	sop <operation> <filepath 1> <filepath 2>
 
 <operation> must be one of: union, intersection, difference
 
-Example: setop union file1.txt file2.txt
+Example: sop union file1.txt file2.txt
 `
 
 func TestRun(t *testing.T) {

@@ -1,4 +1,4 @@
-module github.com/marcosy/setop
+module github.com/marcosy/sop
 
 go 1.18
 
