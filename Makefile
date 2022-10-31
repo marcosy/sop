@@ -65,7 +65,7 @@ $(golangci_lint_bin):
 
 ##@ Building
 .PHONY: all
-all: build lint unit-test component-test ## Builds sop binary, run unit tests and lints code
+all: build lint unit-test component-test ## Builds sop binary, lints the code and run tests
 
 .PHONY: build
 build: go-check ## Builds sop binary
