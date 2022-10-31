@@ -44,17 +44,24 @@ func TestRun(t *testing.T) {
 			expExitCode: 1,
 		},
 		{
+			name:          "When calc creation fails, exit code is non zero",
+			args:          []string{"union", "file1.txt", "file2.txt"},
+			failOperation: true,
+			expMessage:    "Unable to perform operation: something went wrong",
+			expExitCode:   3,
+		},
+		{
 			name:        "When union is invoked, union operator is called",
 			args:        []string{"union", "file1.txt", "file2.txt"},
 			expMessage:  "union was called\n",
 			expExitCode: 0,
 		},
+
 		{
-			name:          "When union operator fails, exit code is non zero",
-			args:          []string{"union", "file1.txt", "file2.txt"},
-			failOperation: true,
-			expMessage:    "Unable to compute union: something went wrong",
-			expExitCode:   3,
+			name:        "When intersection is invoked, intersection operator is called",
+			args:        []string{"intersection", "file1.txt", "file2.txt"},
+			expMessage:  "intersection was called\n",
+			expExitCode: 0,
 		},
 	}
 	for _, test := range tests {
@@ -97,4 +104,8 @@ type fakeCalc struct{}
 
 func (*fakeCalc) Union() string {
 	return "union was called"
+}
+
+func (*fakeCalc) Intersection() string {
+	return "intersection was called"
 }

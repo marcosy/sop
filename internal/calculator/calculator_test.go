@@ -127,6 +127,71 @@ func TestUnion(t *testing.T) {
 	}
 }
 
+func TestIntersection(t *testing.T) {
+	tests := []struct {
+		name   string
+		set1   string
+		set2   string
+		expSet string
+	}{
+		{
+			name:   "Intersection of all different elements",
+			set1:   "1\n2\n3",
+			set2:   "4\n5\n6",
+			expSet: "",
+		},
+		{
+			name:   "Intersection with some repeated elements",
+			set1:   "1\n2\n3\n4",
+			set2:   "3\n4\n5",
+			expSet: "3\n4",
+		},
+		{
+			name:   "Intersection with trailing separator",
+			set1:   "1\n2\n3\n4",
+			set2:   "3\n4\n5\n",
+			expSet: "3\n4",
+		},
+		{
+			name:   "Intersection with trailing separators",
+			set1:   "1\n2\n3\n4\n\n",
+			set2:   "3\n4\n5\n\n",
+			expSet: "3\n4",
+		},
+		{
+			name:   "Intersection of set1 with empty set",
+			set1:   "1\n2\n3",
+			set2:   "",
+			expSet: "",
+		},
+		{
+			name:   "Intersection of empty set with set2",
+			set1:   "",
+			set2:   "1\n2\n3",
+			expSet: "",
+		},
+		{
+			name:   "Intersection of empty sets",
+			set1:   "",
+			set2:   "",
+			expSet: "",
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			f1 := makeTempFile(t, test.set1)
+			f2 := makeTempFile(t, test.set2)
+			c, err := newCalculator(t, f1.Name(), f2.Name())
+			require.NoError(t, err)
+
+			actResult := c.Intersection()
+
+			requireEqualSets(t, test.expSet, actResult, c.GetSeparator())
+		})
+	}
+}
+
 func newCalculator(t *testing.T, fpath1, fpath2 string) (*calculator.T, error) {
 	op, err := calculator.New(fpath1, fpath2)
 	if err != nil {

@@ -29,6 +29,7 @@ func New(filepath1, filepath2 string) (I, error) {
 
 type I interface {
 	Union() string
+	Intersection() string
 }
 
 type T struct {
@@ -55,6 +56,33 @@ func (t *T) Union() string {
 		if k != "" {
 			resultSet += k + t.separator
 		}
+	}
+
+	resultSet = strings.TrimSuffix(resultSet, t.separator)
+
+	return resultSet
+}
+
+func (t *T) Intersection() string {
+	slice1 := strings.Split(t.set1, t.separator)
+	slice2 := strings.Split(t.set2, t.separator)
+
+	map1 := make(map[string]struct{})
+	for _, e := range slice1 {
+		map1[e] = struct{}{}
+	}
+
+	var resultSet string
+	for _, e := range slice2 {
+		if _, ok := map1[e]; !ok {
+			continue
+		}
+
+		if e == "" {
+			continue
+		}
+
+		resultSet += e + t.separator
 	}
 
 	resultSet = strings.TrimSuffix(resultSet, t.separator)

@@ -43,21 +43,18 @@ func (c *Cli) Run(args []string) int {
 		return 1
 	}
 
+	calc, err := c.newCalculator(args[1], args[2])
+	if err != nil {
+		c.printf("Unable to perform operation: %v", err)
+		return 3
+	}
+
 	operation := args[0]
 	switch operation {
 	case opUnion:
-		calc, err := c.newCalculator(args[1], args[2])
-		if err != nil {
-			c.printf("Unable to compute union: %v", err)
-			return 3
-		}
-
 		c.printf(calc.Union())
-		c.printf("\n")
-
 	case opIntersection:
-		c.printf("Set intersection is not implemented yet\n")
-		return 2
+		c.printf(calc.Intersection())
 	case opDifference:
 		c.printf("Set difference is not implemented yet\n")
 		return 2
@@ -66,6 +63,7 @@ func (c *Cli) Run(args []string) int {
 		return 1
 	}
 
+	c.printf("\n")
 	return 0
 }
 
