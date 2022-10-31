@@ -56,11 +56,16 @@ func TestRun(t *testing.T) {
 			expMessage:  "union was called\n",
 			expExitCode: 0,
 		},
-
 		{
 			name:        "When intersection is invoked, intersection operator is called",
 			args:        []string{"intersection", "file1.txt", "file2.txt"},
 			expMessage:  "intersection was called\n",
+			expExitCode: 0,
+		},
+		{
+			name:        "When difference is invoked, difference operator is called",
+			args:        []string{"difference", "file1.txt", "file2.txt"},
+			expMessage:  "difference was called\n",
 			expExitCode: 0,
 		},
 	}
@@ -108,4 +113,8 @@ func (*fakeCalc) Union() string {
 
 func (*fakeCalc) Intersection() string {
 	return "intersection was called"
+}
+
+func (*fakeCalc) Difference() string {
+	return "difference was called"
 }

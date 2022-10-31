@@ -192,6 +192,71 @@ func TestIntersection(t *testing.T) {
 	}
 }
 
+func TestDifference(t *testing.T) {
+	tests := []struct {
+		name   string
+		set1   string
+		set2   string
+		expSet string
+	}{
+		{
+			name:   "Difference of all different elements",
+			set1:   "1\n2\n3",
+			set2:   "4\n5\n6",
+			expSet: "1\n2\n3",
+		},
+		{
+			name:   "Difference with some repeated elements",
+			set1:   "1\n2\n3\n4",
+			set2:   "3\n4\n5",
+			expSet: "1\n2",
+		},
+		{
+			name:   "Difference with trailing separator",
+			set1:   "1\n2\n3\n4",
+			set2:   "3\n4\n5\n",
+			expSet: "1\n2",
+		},
+		{
+			name:   "Difference with trailing separators",
+			set1:   "1\n2\n3\n4\n\n",
+			set2:   "3\n4\n5\n\n",
+			expSet: "1\n2",
+		},
+		{
+			name:   "Difference of set1 with empty set",
+			set1:   "1\n2\n3",
+			set2:   "",
+			expSet: "1\n2\n3",
+		},
+		{
+			name:   "Difference of empty set with set2",
+			set1:   "",
+			set2:   "1\n2\n3",
+			expSet: "",
+		},
+		{
+			name:   "Difference of empty sets",
+			set1:   "",
+			set2:   "",
+			expSet: "",
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			f1 := makeTempFile(t, test.set1)
+			f2 := makeTempFile(t, test.set2)
+			c, err := newCalculator(t, f1.Name(), f2.Name())
+			require.NoError(t, err)
+
+			actResult := c.Difference()
+
+			requireEqualSets(t, test.expSet, actResult, c.GetSeparator())
+		})
+	}
+}
+
 func newCalculator(t *testing.T, fpath1, fpath2 string) (*calculator.T, error) {
 	op, err := calculator.New(fpath1, fpath2)
 	if err != nil {

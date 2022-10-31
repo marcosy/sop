@@ -56,8 +56,7 @@ func (c *Cli) Run(args []string) int {
 	case opIntersection:
 		c.printf(calc.Intersection())
 	case opDifference:
-		c.printf("Set difference is not implemented yet\n")
-		return 2
+		c.printf(calc.Difference())
 	default:
 		c.showHelp()
 		return 1
