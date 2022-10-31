@@ -46,7 +46,7 @@ func (c *Cli) Run(args []string) int {
 	calc, err := c.newCalculator(args[1], args[2])
 	if err != nil {
 		c.printf("Unable to perform operation: %v", err)
-		return 3
+		return 2
 	}
 
 	operation := args[0]
@@ -59,7 +59,7 @@ func (c *Cli) Run(args []string) int {
 		c.printf(calc.Difference())
 	default:
 		c.showHelp()
-		return 1
+		return 3
 	}
 
 	c.printf("\n")

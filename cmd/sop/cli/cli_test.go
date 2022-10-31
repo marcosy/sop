@@ -41,14 +41,14 @@ func TestRun(t *testing.T) {
 			name:        "When 1st parameter is unknown, shows help message and exit code equal to 1",
 			args:        []string{"unknown", "file1.txt", "file2.txt"},
 			expMessage:  helpMessage,
-			expExitCode: 1,
+			expExitCode: 3,
 		},
 		{
 			name:          "When calc creation fails, exit code is non zero",
 			args:          []string{"union", "file1.txt", "file2.txt"},
 			failOperation: true,
 			expMessage:    "Unable to perform operation: something went wrong",
-			expExitCode:   3,
+			expExitCode:   2,
 		},
 		{
 			name:        "When union is invoked, union operator is called",
