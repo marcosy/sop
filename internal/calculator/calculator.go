@@ -6,9 +6,9 @@ import (
 	"strings"
 )
 
-func New(filepath1, filepath2 string) (I, error) {
+func New(filepath1, filepath2, separator string) (I, error) {
 	t := &T{
-		separator: "\n",
+		separator: separator,
 	}
 
 	set1, err := os.ReadFile(filepath1)

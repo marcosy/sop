@@ -1,7 +1,9 @@
 package cli_test
 
 import (
+	"flag"
 	"fmt"
+	"os"
 	"testing"
 
 	"github.com/marcosy/sop/internal/calculator"
@@ -9,12 +11,23 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var helpMessage = `Usage:
-	sop <operation> <filepath 1> <filepath 2>
+var helpMessage = `sop - A command line tool to perform set operations with files
 
-<operation> must be one of: union, intersection, difference
+Usage:	sop [options] <operation> <filepath A> <filepath B>
 
-Example: sop union file1.txt file2.txt
+operation:
+  union
+	Print elements that are in file A or file B
+  intersection
+	Print elements that are in file A and file B
+  difference
+	Print elements of file A that do not exist in file B
+
+options:
+
+Examples:
+  sop union fileA.txt fileB.txt
+  sop -s "," union fileA.csv fileB.csv
 `
 
 func TestRun(t *testing.T) {
@@ -81,7 +94,11 @@ func TestRun(t *testing.T) {
 				cli.WithPrinter(r.printf),
 				cli.WithCalcConstructor(calcConstructor),
 			)
-			actExitCode := c.Run(test.args)
+
+			os.Args = append([]string{"cmd"}, test.args...)                  // override cmd args
+			flag.CommandLine = flag.NewFlagSet(os.Args[0], flag.ExitOnError) // reset parsed flags
+
+			actExitCode := c.Run()
 
 			assert.Equal(t, test.expExitCode, actExitCode)
 			assert.Equal(t, test.expMessage, r.message)
@@ -97,11 +114,11 @@ func (r *recorder) printf(format string, a ...interface{}) {
 	r.message += fmt.Sprintf(format, a...)
 }
 
-func newFakeCalcConstructor(a, b string) (calculator.I, error) {
+func newFakeCalcConstructor(a, b, c string) (calculator.I, error) {
 	return &fakeCalc{}, nil
 }
 
-func newFakeCalcConstructorFaulty(a, b string) (calculator.I, error) {
+func newFakeCalcConstructorFaulty(a, b, c string) (calculator.I, error) {
 	return nil, fmt.Errorf("something went wrong")
 }
 

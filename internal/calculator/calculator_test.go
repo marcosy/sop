@@ -11,6 +11,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const separator string = "\n"
+
 func TestNew(t *testing.T) {
 	f1 := makeTempFile(t, "1\n2\n3\n")
 	f2 := makeTempFile(t, "3\n4\n5\n")
@@ -30,7 +32,7 @@ func TestNew(t *testing.T) {
 			filepath2:    f2.Name(),
 			expContent1:  "1\n2\n3\n",
 			expContent2:  "3\n4\n5\n",
-			expSeparator: "\n",
+			expSeparator: separator,
 		},
 		{
 			name:      "When 1st file cannot be read, show proper error",
@@ -258,7 +260,7 @@ func TestDifference(t *testing.T) {
 }
 
 func newCalculator(t *testing.T, fpath1, fpath2 string) (*calculator.T, error) {
-	op, err := calculator.New(fpath1, fpath2)
+	op, err := calculator.New(fpath1, fpath2, separator)
 	if err != nil {
 		return nil, err
 	}

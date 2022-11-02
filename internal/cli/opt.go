@@ -16,4 +16,4 @@ func WithCalcConstructor(constructor calculatorConstructor) Opt {
 
 type Opt func(*Cli)
 type printer func(string, ...interface{})
-type calculatorConstructor func(string, string) (calculator.I, error)
+type calculatorConstructor func(string, string, string) (calculator.I, error)

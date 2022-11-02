@@ -71,8 +71,7 @@ The [union](https://en.wikipedia.org/wiki/Union_(set_theory)) of two sets A and 
 
 #### Intersection
 
-The [intersection](https://en.wikipedia.org/wiki/Intersection_(set_theory)
-) of two sets A and B is the set containing all elements of A that also belong to B or equivalently, all elements of B that also belong to A.
+The [intersection](https://en.wikipedia.org/wiki/Intersection_(set_theory)) of two sets A and B is the set containing all elements of A that also belong to B or equivalently, all elements of B that also belong to A.
 
 ```bash
 > sop intersection fileA.txt fileB.txt
@@ -93,6 +92,13 @@ The [difference](https://en.wikipedia.org/wiki/Complement_(set_theory)#Relative_
 ### Considerations
 
 #### Separator
+
+The separator character used to delimitate elements is set by default to the new
+line character (`\n`) but can also be configured using the flag `-s`:
+
+```bash
+> sop -s , union fileA.csv fileB.csv 
+```
 
 #### Sorting
 

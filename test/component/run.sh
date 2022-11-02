@@ -7,8 +7,19 @@ run-test() {
     sop=../../bin/sop
 
     # Execute
-    $sop > /dev/null
-    $sop $operation $file1 $file2 | sort > $actual 
+    case "$options" in
+    "") # Using default ("\n") separator
+        $sop $options $operation $file1 $file2 | sort  > $actual
+        ;;
+    "-s ,") # Using "," separator
+        $sop $options $operation $file1 $file2 | tr , '\n' | sort -n | paste -sd, - > $actual
+        ;;
+    *)
+        echo "Unsupported separator for sorting"
+        exit 1
+        ;;
+    esac
+
 
     # Assert
     set +o errexit 

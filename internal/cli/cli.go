@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"flag"
 	"fmt"
 
 	"github.com/marcosy/sop/internal/calculator"
@@ -32,7 +33,12 @@ type Cli struct {
 	newCalculator calculatorConstructor
 }
 
-func (c *Cli) Run(args []string) int {
+func (c *Cli) Run() int {
+	separator := flag.String("s", "\n", "String used as element separator")
+	flag.Usage = c.showHelp
+	flag.Parse()
+
+	args := flag.Args()
 	if len(args) == 0 {
 		c.showHelp()
 		return 0
@@ -43,7 +49,7 @@ func (c *Cli) Run(args []string) int {
 		return 1
 	}
 
-	calc, err := c.newCalculator(args[1], args[2])
+	calc, err := c.newCalculator(args[1], args[2], *separator)
 	if err != nil {
 		c.printf("Unable to perform operation: %v", err)
 		return 2
@@ -67,7 +73,25 @@ func (c *Cli) Run(args []string) int {
 }
 
 func (c *Cli) showHelp() {
-	c.printf("Usage:\n\tsop <operation> <filepath 1> <filepath 2>\n\n")
-	c.printf("<operation> must be one of: union, intersection, difference\n\n")
-	c.printf("Example: sop union file1.txt file2.txt\n")
+	c.printf("sop - A command line tool to perform set operations with files\n\n")
+	c.printf("Usage:\tsop [options] <operation> <filepath A> <filepath B>\n\n")
+
+	c.printf("operation:\n")
+	c.printf("  union\n")
+	c.printf("\tPrint elements that are in file A or file B\n")
+	c.printf("  intersection\n")
+	c.printf("\tPrint elements that are in file A and file B\n")
+	c.printf("  difference\n")
+	c.printf("\tPrint elements of file A that do not exist in file B\n")
+
+	c.printf("\n")
+
+	c.printf("options:\n")
+	flag.PrintDefaults()
+
+	c.printf("\n")
+
+	c.printf("Examples:\n")
+	c.printf("  sop union fileA.txt fileB.txt\n")
+	c.printf("  sop -s \",\" union fileA.csv fileB.csv\n")
 }
