@@ -14,7 +14,11 @@ If you have Go installed in your system, just run:
 > go install github.com/marcosy/sop
 ```
 
-Remember to add `GOPATH/bin` to your path.
+Remember to add `GOPATH/bin` to your `PATH`:
+
+```bash
+> export PATH="$GOPATH/bin:$PATH"
+```
 
 ### Build from source
 
@@ -28,6 +32,26 @@ You can also build `sop` from source, just run:
 The binary will be saved at `./bin/sop`. For other targets, run `make help`.
 
 ## Usage
+
+```bash
+sop [options] <operation> <filepath A> <filepath B>
+```
+
+- **operation** can be one of:
+  - `union`: Print elements that exists in file A or file B
+
+  - `intersection`: Print elements that exists in file A and file B
+  
+  - `difference`: Print elements that exists in file A and do not exist in file B
+
+- **filepath A** and **filepath B** are the filepaths to the files containing
+the elements to operate with. Elements are delimited by a separator string which
+by default is `"\n"`.
+
+- **options** can be:
+  - `-s`: String used as element separator (default `"\n"`)
+
+## Examples
 
 Given two files A (`fileA.txt`) and B (`fileB.txt`):
 

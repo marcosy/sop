@@ -78,11 +78,11 @@ func (c *Cli) showHelp() {
 
 	c.printf("operation:\n")
 	c.printf("  union\n")
-	c.printf("\tPrint elements that are in file A or file B\n")
+	c.printf("\tPrint elements that exists in file A or file B\n")
 	c.printf("  intersection\n")
-	c.printf("\tPrint elements that are in file A and file B\n")
+	c.printf("\tPrint elements that exists in file A and file B\n")
 	c.printf("  difference\n")
-	c.printf("\tPrint elements of file A that do not exist in file B\n")
+	c.printf("\tPrint elements that exists in file A and do not exist in file B\n")
 
 	c.printf("\n")
 

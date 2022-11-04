@@ -17,11 +17,11 @@ Usage:	sop [options] <operation> <filepath A> <filepath B>
 
 operation:
   union
-	Print elements that are in file A or file B
+	Print elements that exists in file A or file B
   intersection
-	Print elements that are in file A and file B
+	Print elements that exists in file A and file B
   difference
-	Print elements of file A that do not exist in file B
+	Print elements that exists in file A and do not exist in file B
 
 options:
 
