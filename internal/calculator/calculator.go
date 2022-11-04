@@ -6,23 +6,23 @@ import (
 	"strings"
 )
 
-func New(filepath1, filepath2, separator string) (I, error) {
+func New(filepathA, filepathB, separator string) (I, error) {
 	t := &T{
 		separator: separator,
 	}
 
-	set1, err := os.ReadFile(filepath1)
+	setA, err := os.ReadFile(filepathA)
 	if err != nil {
 		return nil, fmt.Errorf("unable to read first file: %w", err)
 	}
 
-	set2, err := os.ReadFile(filepath2)
+	setB, err := os.ReadFile(filepathB)
 	if err != nil {
 		return nil, fmt.Errorf("unable to read second file: %w", err)
 	}
 
-	t.set1 = string(set1)
-	t.set2 = string(set2)
+	t.setA = string(setA)
+	t.setB = string(setB)
 
 	return t, nil
 }
@@ -34,96 +34,83 @@ type I interface {
 }
 
 type T struct {
-	set1      string
-	set2      string
+	setA      string
+	setB      string
 	separator string
 }
 
 func (t *T) Union() string {
-	slice1 := strings.Split(t.set1, t.separator)
-	slice2 := strings.Split(t.set2, t.separator)
+	elementsA := strings.Split(t.setA, t.separator)
+	elementsB := strings.Split(t.setB, t.separator)
 
-	resultMap := make(map[string]struct{})
-	for _, e := range slice1 {
-		resultMap[e] = struct{}{}
+	union := make(map[string]struct{})
+
+	for _, e := range elementsA {
+		union[e] = struct{}{}
 	}
 
-	for _, e := range slice2 {
-		resultMap[e] = struct{}{}
+	for _, e := range elementsB {
+		union[e] = struct{}{}
 	}
 
-	var resultSet string
-	for k := range resultMap {
-		if k != "" {
-			resultSet += k + t.separator
-		}
-	}
-
-	resultSet = strings.TrimSuffix(resultSet, t.separator)
-
-	return resultSet
+	return t.format(union)
 }
 
 func (t *T) Intersection() string {
-	slice1 := strings.Split(t.set1, t.separator)
-	slice2 := strings.Split(t.set2, t.separator)
+	elementsA := strings.Split(t.setA, t.separator)
+	elementsB := strings.Split(t.setB, t.separator)
 
-	map1 := make(map[string]struct{})
-	for _, e := range slice1 {
-		map1[e] = struct{}{}
+	lookupA := make(map[string]struct{})
+	for _, e := range elementsA {
+		lookupA[e] = struct{}{}
 	}
 
-	var resultSet string
-	for _, e := range slice2 {
-		if _, ok := map1[e]; !ok {
-			continue
+	intersection := make(map[string]struct{})
+	for _, e := range elementsB {
+		if _, ok := lookupA[e]; ok {
+			intersection[e] = struct{}{}
 		}
-
-		if e == "" {
-			continue
-		}
-
-		resultSet += e + t.separator
 	}
 
-	resultSet = strings.TrimSuffix(resultSet, t.separator)
-
-	return resultSet
+	return t.format(intersection)
 }
 
 func (t *T) Difference() string {
-	slice1 := strings.Split(t.set1, t.separator)
-	slice2 := strings.Split(t.set2, t.separator)
+	elementsA := strings.Split(t.setA, t.separator)
+	elementsB := strings.Split(t.setB, t.separator)
 
-	resultMap := make(map[string]struct{})
-	for _, e := range slice1 {
-		resultMap[e] = struct{}{}
+	difference := make(map[string]struct{})
+
+	for _, e := range elementsA {
+		difference[e] = struct{}{}
 	}
 
-	for _, e := range slice2 {
-		delete(resultMap, e)
+	for _, e := range elementsB {
+		delete(difference, e)
 	}
 
-	var resultSet string
-	for k := range resultMap {
-		if k != "" {
-			resultSet += k + t.separator
-		}
-	}
-
-	resultSet = strings.TrimSuffix(resultSet, t.separator)
-
-	return resultSet
+	return t.format(difference)
 }
 
-func (t *T) GetSet1() string {
-	return t.set1
+func (t *T) GetSetA() string {
+	return t.setA
 }
 
-func (t *T) GetSet2() string {
-	return t.set2
+func (t *T) GetSetB() string {
+	return t.setB
 }
 
 func (t *T) GetSeparator() string {
 	return t.separator
+}
+
+func (t *T) format(set map[string]struct{}) string {
+	var str string
+	for k := range set {
+		if k != "" {
+			str += k + t.separator
+		}
+	}
+
+	return strings.TrimSuffix(str, t.separator)
 }
