@@ -103,9 +103,9 @@ The [intersection](https://en.wikipedia.org/wiki/Intersection_(set_theory)) of t
 4
 ```
 
-#### Difference or Relative Complement
+#### Difference
 
-The [difference](https://en.wikipedia.org/wiki/Complement_(set_theory)#Relative_complement) of A and B, is the set of all elements in A that are not in B.
+The [difference](https://en.wikipedia.org/wiki/Complement_(set_theory)#Relative_complement) (a.k.a. relative complement) of A and B, is the set of all elements in A that are not in B.
 
 ```bash
 > sop difference fileA.txt fileB.txt
