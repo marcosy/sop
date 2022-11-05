@@ -1,7 +1,6 @@
 package calculator_test
 
 import (
-	"io/ioutil"
 	"os"
 	"sort"
 	"strings"
@@ -271,7 +270,7 @@ func newCalculator(t *testing.T, fpath1, fpath2 string) (*calculator.T, error) {
 }
 
 func makeTempFile(t *testing.T, content string) *os.File {
-	f, err := ioutil.TempFile("", "sop-test-file")
+	f, err := os.CreateTemp("", "sop-test-file")
 	require.NoError(t, err, "unable to create temp file")
 
 	_, err = f.WriteString(content)
