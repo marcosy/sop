@@ -29,6 +29,14 @@ changelog:
       - '^docs:'
       - '^test:'
 
+brews:
+- name: sop
+  homepage: https://github.com/marcosy/homebrew-tap
+  tap:
+    owner: marcosy
+    name: homebrew-tap
+    token: "{{ .Env.TAP_GITHUB_TOKEN }}"
+
 # modelines, feel free to remove those if you don't want/use them:
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
 # vim: set ts=2 sw=2 tw=0 fo=cnqoj
