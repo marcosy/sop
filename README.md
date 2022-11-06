@@ -42,6 +42,8 @@ The binary will be saved at `./bin/sop`. For other targets, run `make help`.
 
 ## Usage
 
+`sop` considers files as sets of elements and performs set operations with those files.
+
 ```bash
 sop [options] <operation> <filepath A> <filepath B>
 ```
@@ -67,19 +69,19 @@ Given two files A (`fileA.txt`) and B (`fileB.txt`):
 `fileA.txt`:
 
 ```txt
-1
-2
-3
-4
+Fox
+Duck
+Dog
+Cat
 ```
 
 `fileB.txt`:
 
 ```txt
-3
-4
-5
-6
+Dog
+Cat
+Cow
+Goat
 ```
 
 `sop` performs set operations with the files.
@@ -94,12 +96,12 @@ The [union](https://en.wikipedia.org/wiki/Union_(set_theory)) of two sets A and 
 
 ```bash
 > sop union fileA.txt fileB.txt
-1
-2
-3
-4
-5
-6
+Fox
+Duck
+Dog
+Cat
+Cow
+Goat
 ```
 
 #### Intersection
@@ -108,8 +110,8 @@ The [intersection](https://en.wikipedia.org/wiki/Intersection_(set_theory)) of t
 
 ```bash
 > sop intersection fileA.txt fileB.txt
-3
-4
+Dog
+Cat
 ```
 
 #### Difference
@@ -118,8 +120,8 @@ The [difference](https://en.wikipedia.org/wiki/Complement_(set_theory)#Relative_
 
 ```bash
 > sop difference fileA.txt fileB.txt
-1
-2
+Fox
+Duck
 ```
 
 ### Considerations
@@ -141,6 +143,4 @@ to `sort`:
 
 ```bash
 > sop intersection fileA.txt fileB.txt | sort
-3
-4
 ```
