@@ -4,11 +4,15 @@ _A command line tool to perform **s**et **op**erations with files_
 
 ## Installation
 
-You can install `sop` using `go install` or building it from source.
+You can install `sop` using `homebrew`, `go install` or building it from source.
+
+### Homebrew
+
+```bash
+> brew install marcosy/tap/sop
+```
 
 ### Go Install
-
-If you have Go installed in your system, just run:
 
 ```bash
 > go install github.com/marcosy/sop
