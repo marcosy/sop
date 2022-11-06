@@ -73,7 +73,10 @@ build: go-check ## Builds sop binary
 
 .PHONY: unit-test
 unit-test: go-check ## Runs unit tests
-	@$(go_path) go test ./... --race
+	@$(go_path) go test ./... --race --coverprofile .unit-test-coverage.txt
+	@echo
+	@echo "Unit test coverage report:"
+	@$(go_path) go tool cover -func .unit-test-coverage.txt
 
 .PHONY: component-test
 component-test: build ## Run component tests

@@ -1,5 +1,10 @@
 # sop
 
+[![Build](https://github.com/marcosy/sop/actions/workflows/build.yml/badge.svg)](https://github.com/marcosy/sop/actions/workflows/build.yml)
+[![coverage](https://img.shields.io/badge/coverage-98.9%25-brightgreen)](https://github.com/marcosy/sop/actions/workflows/build.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/marcosy/sop)](https://goreportcard.com/report/github.com/marcosy/sop)
+[![License](https://img.shields.io/github/license/marcosy/sop?color=brightgreen)](./LICENSE)
+
 _A command line tool to perform **s**et **op**erations with files_
 
 ## Installation
